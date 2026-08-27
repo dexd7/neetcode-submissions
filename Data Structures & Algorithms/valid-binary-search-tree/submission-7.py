@@ -1,0 +1,31 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        #for valid BST at every level the value that is children to the immediate right parent must be smaller and other way round for immediate left parent
+        # Below is the recursive solution.
+        # def dfs(node, left, right):
+        #     if not node:
+        #         return True
+        #     if not (left<node.val<right):
+        #         return False
+        #     return dfs(node.left, left, node.val) and dfs(node.right, node.val, right)
+        # return dfs(root, float('-inf'), float('inf'))
+        # Below is the iterative solution.
+        queue = deque([[root, float('-inf'), float('inf')]])
+        while queue:
+            node, left, right = queue.popleft()
+            if not (left<node.val<right):
+                return False
+            if node.left:
+                queue.append([node.left, left, node.val])
+            if node.right:
+                queue.append([node.right, node.val, right])
+        return True
+
+            
